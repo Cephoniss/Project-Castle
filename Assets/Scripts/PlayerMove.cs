@@ -11,13 +11,15 @@ public class PlayerMove : MonoBehaviour
    [SerializeField] private bool isGrounded = false; //Bool to check if player has jumped or is on ground
    [SerializeField] private bool hasDoubleJumped = false; //Bool to check if player has jump and for use with double jump method
    private Rigidbody2D rb; //Setting up Rigidbody2D for use with player movement
-   public Animator animator; 
-   Vector2 moveInput;
+   public Animator animator;
+   public BoxCollider2D myFeet;
+   //Vector2 moveInput;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        myFeet = GetComponent<BoxCollider2D>();
     }
 
     
@@ -63,18 +65,18 @@ public class PlayerMove : MonoBehaviour
     }
     
     // Using the below to check to see if player has jump or is on the ground. When the player activates a collision with an object tagged "Ground"
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collider.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
             animator.SetBool("isJumping", false); //disables jump animation if grounded 
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collider.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
         }
