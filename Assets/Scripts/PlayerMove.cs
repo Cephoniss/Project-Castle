@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -116,6 +117,18 @@ public class PlayerMove : MonoBehaviour
     {
         isAlive = false;
         animator.SetTrigger("isDying"); //Enables dying animation
+        StartCoroutine(ReloadScene()); //Added wait time before reloading
         //Add sound here
+        
     }
+
+    IEnumerator ReloadScene()
+    {
+        yield return new WaitForSeconds(1);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
+
+
+
 }

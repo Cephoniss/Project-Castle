@@ -77,8 +77,7 @@ public class EnemyMove : MonoBehaviour
     {
         isDead = true;
         animator.SetTrigger("isDying");
-        Debug.Log("Dying");
-        StartCoroutine(Deletebody());
+        StartCoroutine(Deletebody()); //Added wait time before object is destroyed
         //Add  sound  here
     }
     IEnumerator Deletebody()
