@@ -10,6 +10,9 @@ public class PlayerMove : MonoBehaviour
    [SerializeField] public float doubleJumpForce = 3.0f; //Double jump force can be edited in inspector
    [SerializeField] private bool isGrounded = false; //Bool to check if player has jumped or is on ground
    [SerializeField] private bool hasDoubleJumped = false; //Bool to check if player has jump and for use with double jump method
+   [SerializeField] private bool isAlive = true; //Bool to check if player is alive
+   [SerializeField] public GameObject knife; //GameObject to be edited in inspector
+   [SerializeField] Transform throwKnife; //Transform for knife GameObject
    private Rigidbody2D rb; //Setting up Rigidbody2D for use with player movement
    public Animator animator;
    public BoxCollider2D myFeet;
@@ -25,6 +28,7 @@ public class PlayerMove : MonoBehaviour
     
     void Update()
     {
+        if(!isAlive){return;} //Returns if isAlive is false
         PlayerMovement();
         FlipSprite();
         PlayerJump();
@@ -38,6 +42,12 @@ public class PlayerMove : MonoBehaviour
     //    Debug.Log(moveInput);
     //}
 
+    //Using new unity input method for getting "OnFire" input and shooting projectile
+    void OnFire(InputValue value)
+    {
+        Instantiate(knife, throwKnife.position, transform.rotation);
+    }
+    
     void PlayerMovement()
     {
         //Uses unity input method to get "Horizontal" movement might change this to use new input method
@@ -56,11 +66,13 @@ public class PlayerMove : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             hasDoubleJumped = false; //Allows for doulbe jump by setting bool to false
             animator.SetBool("isJumping", true); //enables jump animation
+            //Add sound here
         }
         else if (Input.GetButtonDown("Jump") && !isGrounded && !hasDoubleJumped)
         {
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
             hasDoubleJumped = true; //Disables double jump
+            //Add a slightly diff jump sound here
         }
     }
     
@@ -70,7 +82,12 @@ public class PlayerMove : MonoBehaviour
         if (collider.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            animator.SetBool("isJumping", false); //disables jump animation if grounded 
+            animator.SetBool("isJumping", false); //Disables jump animation if grounded 
+        }
+
+        else if (collider.gameObject.CompareTag("Enemy")) //Adding this here to check if player collides with enemy
+        {
+            Death();
         }
     }
 
@@ -93,5 +110,12 @@ public class PlayerMove : MonoBehaviour
             transform.localScale = new Vector2 (Mathf.Sign(rb.velocity.x), 1f); 
         }
         
+    }
+
+    void Death()
+    {
+        isAlive = false;
+        animator.SetTrigger("isDying"); //Enables dying animation
+        //Add sound here
     }
 }

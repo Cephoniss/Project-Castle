@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Enemy
+  - Knife
   layers:
   - Default
   - TransparentFX
@@ -13,11 +15,11 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Knifes
   - Player
   - Background
   - 
-  - 
+  - Enemies
   - 
   - 
   - 
@@ -56,6 +58,9 @@ TagManager:
     locked: 0
   - name: Death Layer
     uniqueID: 4129159717
+    locked: 0
+  - name: Enemies
+    uniqueID: 1170653335
     locked: 0
   - name: Player
     uniqueID: 933817913
