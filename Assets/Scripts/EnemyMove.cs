@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyMove : MonoBehaviour
 {
     [SerializeField] float speed = 1.0f; //Walking speed of enemy can be edited in inspector
+    [SerializeField] AudioClip enemyHitClip;
+    [SerializeField] AudioSource enemyHitAudio;
     private Rigidbody2D rb; //Setting up Rigidbody2D for use with movement
     public Animator animator;
     bool isDead = false; 
@@ -76,9 +78,10 @@ public class EnemyMove : MonoBehaviour
     void EnemyDeath()
     {
         isDead = true;
+        enemyHitAudio.PlayOneShot(enemyHitClip);//Plays audio clip
         animator.SetTrigger("isDying");
         StartCoroutine(Deletebody()); //Added wait time before object is destroyed
-        //Add  sound  here
+        
     }
     IEnumerator Deletebody()
    {

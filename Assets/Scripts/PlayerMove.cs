@@ -14,6 +14,9 @@ public class PlayerMove : MonoBehaviour
    [SerializeField] private bool isAlive = true; //Bool to check if player is alive
    [SerializeField] public GameObject knife; //GameObject to be edited in inspector
    [SerializeField] Transform throwKnife; //Transform for knife GameObject
+   [SerializeField] AudioClip throwKnifeClip;
+   [SerializeField] AudioSource throwKnifeAudio;
+
    private Rigidbody2D rb; //Setting up Rigidbody2D for use with player movement
    public Animator animator;
    public BoxCollider2D myFeet;
@@ -47,6 +50,7 @@ public class PlayerMove : MonoBehaviour
     void OnFire(InputValue value)
     {
         Instantiate(knife, throwKnife.position, transform.rotation);
+        throwKnifeAudio.PlayOneShot(throwKnifeClip); //Plays audio clip
     }
     
     void PlayerMovement()
@@ -125,8 +129,7 @@ public class PlayerMove : MonoBehaviour
     IEnumerator ReloadScene()
     {
         yield return new WaitForSeconds(1);
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        FindObjectOfType<GameSession>().PlayerDeath();
     }
 
 

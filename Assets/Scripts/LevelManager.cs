@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     {
         
     }
+    //Checks for collision  with game object tagged with "Player"
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Player"))
