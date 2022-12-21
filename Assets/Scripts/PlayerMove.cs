@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
-   [SerializeField] public float speed = 5.0f; //Walking speed of player can be edited in inspector
-   [SerializeField] public float jumpForce = 6.0f; //Jumping force of player can be edited in inspector
-   [SerializeField] public float doubleJumpForce = 3.0f; //Double jump force can be edited in inspector
+   [SerializeField] public float speed = 4.0f; //Walking speed of player can be edited in inspector
+   [SerializeField] public float jumpForce = 5.0f; //Jumping force of player can be edited in inspector
+   [SerializeField] public float doubleJumpForce = 4.0f; //Double jump force can be edited in inspector
    [SerializeField] private bool isGrounded = false; //Bool to check if player has jumped or is on ground
    [SerializeField] private bool hasDoubleJumped = false; //Bool to check if player has jump and for use with double jump method
    [SerializeField] private bool isAlive = true; //Bool to check if player is alive
@@ -128,7 +128,7 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator ReloadScene()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         FindObjectOfType<GameSession>().PlayerDeath();
     }
 

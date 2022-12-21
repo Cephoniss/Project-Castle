@@ -78,6 +78,8 @@ public class EnemyMove : MonoBehaviour
     void EnemyDeath()
     {
         isDead = true;
+        GetComponent<CapsuleCollider2D>().enabled = false; //This should remove any further collisions
+        GetComponent<BoxCollider2D>().enabled = false; //This should remove any further collisions
         enemyHitAudio.PlayOneShot(enemyHitClip);//Plays audio clip
         animator.SetTrigger("isDying");
         StartCoroutine(Deletebody()); //Added wait time before object is destroyed
